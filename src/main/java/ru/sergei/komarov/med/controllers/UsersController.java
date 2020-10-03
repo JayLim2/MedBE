@@ -35,13 +35,11 @@ public class UsersController {
     }
 
     @PutMapping("/put")
-    public void put(String username, String password,
-                    String fullName) {
+    public void put(String phone, String password) {
 
         User user = new User();
-        user.setUsername(username);
+        user.setPhone(phone);
         user.setPassword(passwordEncoder.encode(password));
-        user.setFullName(fullName);
         Role role = rolesService.getById("ROLE_USER");
         user.setRole(role);
         usersService.save(user);

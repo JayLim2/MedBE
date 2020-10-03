@@ -1,12 +1,17 @@
 package ru.sergei.komarov.med.models;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table(name = "roles")
+@Data
 public class Role implements GrantedAuthority {
 
     @Id
@@ -14,22 +19,6 @@ public class Role implements GrantedAuthority {
 
     @OneToMany(mappedBy = "role")
     private List<User> users;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 
     @Override
     public String getAuthority() {

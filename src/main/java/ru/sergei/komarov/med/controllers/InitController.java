@@ -71,27 +71,24 @@ public class InitController {
 
         for (int i = 1; i <= 5; i++) {
             User user = new User();
-            user.setUsername("user" + i);
+            user.setPhone("user" + i);
             user.setPassword(passwordEncoder.encode("root"));
-            user.setFullName("User Userovich " + i);
             user.setRole(userRole);
             users.add(user);
         }
 
         for (int i = 1; i <= 3; i++) {
             User user = new User();
-            user.setUsername("support" + i);
+            user.setPhone("support" + i);
             user.setPassword(passwordEncoder.encode("root"));
-            user.setFullName("Support Userovich " + i);
             user.setRole(supportEmployeeRole);
             users.add(user);
         }
 
         for (int i = 1; i <= 1; i++) {
             User user = new User();
-            user.setUsername("admin" + i);
+            user.setPhone("admin" + i);
             user.setPassword(passwordEncoder.encode("root"));
-            user.setFullName("Admin Userovich " + i);
             user.setRole(adminRole);
             users.add(user);
         }

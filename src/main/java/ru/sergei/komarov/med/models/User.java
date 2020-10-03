@@ -1,66 +1,55 @@
 package ru.sergei.komarov.med.models;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User implements UserDetails {
 
     @Id
-    private String username;
+    private String phone;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "role", nullable = false)
+    @JoinColumn(nullable = false)
     private Role role;
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Patient> patients;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Doctor> doctors;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(role);
+    }
+
+    @Override
+    public String getUsername() {
+        return phone;
     }
 
     @Override
@@ -85,6 +74,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return username + " (" + fullName + ")";
+        return phone + " (" + lastName + " " + firstName + " " + middleName + ")";
     }
 }
