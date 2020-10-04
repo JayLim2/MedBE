@@ -36,12 +36,6 @@ public class User implements UserDetails {
     @JoinColumn(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Patient> patients;
-
-    @OneToMany(mappedBy = "user")
-    private List<Doctor> doctors;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(role);

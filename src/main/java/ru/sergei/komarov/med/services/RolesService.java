@@ -1,5 +1,6 @@
 package ru.sergei.komarov.med.services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sergei.komarov.med.models.Role;
 import ru.sergei.komarov.med.repositories.RolesRepository;
@@ -7,13 +8,10 @@ import ru.sergei.komarov.med.repositories.RolesRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RolesService implements BasicDataService<Role, String> {
 
     private final RolesRepository rolesRepository;
-
-    public RolesService(RolesRepository rolesRepository) {
-        this.rolesRepository = rolesRepository;
-    }
 
     @Override
     public Role getById(String name) {
@@ -31,12 +29,22 @@ public class RolesService implements BasicDataService<Role, String> {
     }
 
     @Override
-    public void saveAll(List<Role> items) {
+    public void saveList(List<Role> items) {
         rolesRepository.saveAll(items);
+    }
+
+    @Override
+    public void deleteById(String s) {
+        rolesRepository.deleteById(s);
     }
 
     @Override
     public void delete(Role item) {
         rolesRepository.delete(item);
+    }
+
+    @Override
+    public void deleteAll() {
+        rolesRepository.deleteAll();
     }
 }

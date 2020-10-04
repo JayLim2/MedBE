@@ -26,8 +26,8 @@ public class Doctor {
     @Column(name = "working_now")
     private boolean isWorkingNow;
 
-    @ManyToOne
-    @JoinColumn(name = "phone", nullable = false)
+    @OneToOne
+    @JoinColumn(nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "doctor")

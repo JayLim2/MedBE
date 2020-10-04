@@ -10,8 +10,12 @@ public interface BasicDataService<T, ID> {
 
     void save(T item);
 
-    void saveAll(List<T> items);
+    void saveList(List<T> items);
+
+    void deleteById(ID id);
 
     void delete(T item);
+
+    void deleteAll();
 
 }

@@ -1,5 +1,6 @@
 package ru.sergei.komarov.med.services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,13 +11,10 @@ import ru.sergei.komarov.med.repositories.UsersRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UsersService implements UserDetailsService, BasicDataService<User, String> {
 
     private final UsersRepository usersRepository;
-
-    public UsersService(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
-    }
 
     @Override
     public User getById(String username) {
@@ -34,8 +32,13 @@ public class UsersService implements UserDetailsService, BasicDataService<User, 
     }
 
     @Override
-    public void saveAll(List<User> users) {
+    public void saveList(List<User> users) {
         usersRepository.saveAll(users);
+    }
+
+    @Override
+    public void deleteById(String s) {
+        usersRepository.deleteById(s);
     }
 
     @Override
@@ -46,5 +49,10 @@ public class UsersService implements UserDetailsService, BasicDataService<User, 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return getById(login);
+    }
+
+    @Override
+    public void deleteAll() {
+        usersRepository.deleteAll();
     }
 }

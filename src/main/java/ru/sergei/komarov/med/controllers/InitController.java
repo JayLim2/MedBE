@@ -12,7 +12,6 @@ import ru.sergei.komarov.med.services.UsersService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/init")
@@ -93,6 +92,6 @@ public class InitController {
             users.add(user);
         }
 
-        usersService.saveAll(users);
+        usersService.saveList(users);
     }
 }

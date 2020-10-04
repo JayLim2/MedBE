@@ -21,8 +21,11 @@ public class Patient {
     @Column(nullable = false)
     private LocalDate birthday;
 
-    @ManyToOne
-    @JoinColumn(name = "phone", nullable = false)
+    @OneToOne
+    @JoinColumn(nullable = false)
     private User user;
+
+    @Column(name = "insurance_policy", nullable = false)
+    private String insurancePolicyNumber;
 
 }
