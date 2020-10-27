@@ -1,0 +1,86 @@
+@startuml
+left to right direction
+
+interface BasicDataService<T, ID> {
+    T getById(ID id);
+    List<T> getAll();
+    void save(T item);
+    void saveList(List<T> items);
+    void deleteById(ID id);
+    void delete(T item);
+    void deleteAll();
+}
+
+interface BasicDataController<T> {
+    T getById(ID id);
+    List<T> getAll();
+    Response save(JsonObject jsonObject);
+    Response saveList(JsonArray jsonArray);
+    Response deleteById(ID id);
+    Response deleteAll();
+}
+
+AuthenticationController --|> BasicDataController
+DoctorsController --|> BasicDataController
+PatientsController --|> BasicDataController
+PatientTicketsController --|> BasicDataController
+MedServicesController --|> BasicDataController
+SpecializationsController --|> BasicDataController
+CabinetsController --|> BasicDataController
+
+class AuthenticationController {
+    -BCryptPasswordEncoder passwordEncoder;
+    -AuthenticationManager authenticationManager;
+}
+class DoctorsController {}
+class PatientsController {}
+class PatientTicketsController {}
+class MedServicesController {}
+class SpecializationsController {}
+class CabinetsController {}
+
+AuthenticationController --> AuthenticationService
+DoctorsController --> AuthenticationService
+DoctorsController --> DoctorsService
+DoctorsController --> SpecializationsService
+PatientsController --> AuthenticationService
+PatientsController --> PatientsService
+PatientTicketsController --> DoctorsService
+PatientTicketsController --> PatientsService
+PatientTicketsController --> PatientTicketsService
+MedServicesController --> DoctorsService
+MedServicesController --> MedServicesService
+SpecializationsController --> SpecializationsService
+CabinetsController --> CabinetsService
+
+AuthenticationService --|> BasicDataService
+DoctorsService --|> BasicDataService
+PatientsService --|> BasicDataService
+PatientTicketsService --|> BasicDataService
+MedServicesService --|> BasicDataService
+SpecializationsService --|> BasicDataService
+CabinetsService --|> BasicDataService
+
+class AuthenticationService {
+    +UserDetails loadUserByUsername(String phone)
+}
+class DoctorsService {
+    +List<Doctor> getBySpecialization(DoctorSpecialization specialization)
+}
+class PatientsService {
+    +Patient getByUser(User user)
+}
+class PatientTicketsService {
+    +List<PatientTicket> getBy(patient)
+    +List<PatientTicket> getBy(doctor)
+    +List<PatientTicket> getBy(patient, doctor)
+    +List<PatientTicket> getBy(patient, from, to)
+    +List<PatientTicket> getBy(doctor, from, to)
+    +List<PatientTicket> getBy(patient, doctor, from, to)
+}
+class MedServicesService {
+    +List<MedicalService> getBy(doctor)
+    +List<MedicalService> getBy(names)
+}
+
+@enduml

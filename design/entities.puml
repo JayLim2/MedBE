@@ -1,0 +1,62 @@
+@startuml
+
+
+class User {
+    +String phone
+    +String password
+    +String email
+    +String fullName
+    +Role role
+}
+class Doctor {
+    +int id
+    +Specialization specialization
+    +Cabinet cabinet
+    +boolean isWorkingNow
+    +User user
+    +List<PatientTicket> tickets
+}
+class Patient {
+    +int id
+    +String address
+    +LocalDate birthDay
+    +User user
+    +String policyNumber
+}
+class PatientTicket {
+    +int id
+    +LocalDateTime dateTime
+    +MedService medService
+    +Patient patient
+    +Doctor doctor
+    +String prescriptions
+}
+class MedService {
+    +String name
+    +String description
+    +String recommends
+}
+class Specialization {
+    +String name
+    +List<Doctor> doctors
+}
+class Cabinet {
+    +String name;
+    +String specialization;
+    +int recommendedDoctorsCount;
+    +List<Doctor> doctors;
+}
+enum Role {
+    PATIENT, DOCTOR, ADMIN
+}
+
+Doctor --> User
+Doctor o-- PatientTicket
+Patient --> User
+Patient o-- PatientTicket
+Role o-- User
+PatientTicket --> MedService
+Specialization o-- Doctor
+Cabinet o-- Doctor
+
+@enduml
