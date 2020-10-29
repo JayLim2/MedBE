@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/init")
+@RequestMapping("/api/init")
 public class InitController {
 
     private UsersService usersService;
@@ -38,7 +38,7 @@ public class InitController {
 
     @GetMapping("/roles")
     public void initRoles() {
-        Arrays.asList("ROLE_USER", "ROLE_SUPPORT", "ROLE_ADMIN")
+        Arrays.asList("ROLE_PATIENT", "ROLE_DOCTOR", "ROLE_ADMIN")
                 .forEach(roleName -> {
                     Role role = new Role();
                     role.setName(roleName);
@@ -50,16 +50,16 @@ public class InitController {
     public void initUsers() {
         List<User> users = new ArrayList<>();
 
-        Role userRole = rolesService.getById("ROLE_USER");
-        if (userRole == null) {
-            userRole = new Role();
-            userRole.setName("ROLE_USER");
+        Role patientRole = rolesService.getById("ROLE_PATIENT");
+        if (patientRole == null) {
+            patientRole = new Role();
+            patientRole.setName("ROLE_PATIENT");
         }
 
-        Role supportEmployeeRole = rolesService.getById("ROLE_SUPPORT");
-        if (supportEmployeeRole == null) {
-            supportEmployeeRole = new Role();
-            supportEmployeeRole.setName("ROLE_SUPPORT");
+        Role doctorRole = rolesService.getById("ROLE_DOCTOR");
+        if (doctorRole == null) {
+            doctorRole = new Role();
+            doctorRole.setName("ROLE_DOCTOR");
         }
 
         Role adminRole = rolesService.getById("ROLE_ADMIN");
@@ -70,17 +70,21 @@ public class InitController {
 
         for (int i = 1; i <= 5; i++) {
             User user = new User();
-            user.setPhone("user" + i);
+            user.setPhone("patient" + i);
             user.setPassword(passwordEncoder.encode("root"));
-            user.setRole(userRole);
+            user.setFirstName("Пациент");
+            user.setLastName("Пациентов");
+            user.setRole(patientRole);
             users.add(user);
         }
 
         for (int i = 1; i <= 3; i++) {
             User user = new User();
-            user.setPhone("support" + i);
+            user.setPhone("doctor" + i);
             user.setPassword(passwordEncoder.encode("root"));
-            user.setRole(supportEmployeeRole);
+            user.setFirstName("Врач");
+            user.setLastName("Лечилов");
+            user.setRole(doctorRole);
             users.add(user);
         }
 
@@ -88,6 +92,8 @@ public class InitController {
             User user = new User();
             user.setPhone("admin" + i);
             user.setPassword(passwordEncoder.encode("root"));
+            user.setFirstName("Админ");
+            user.setLastName("Админов");
             user.setRole(adminRole);
             users.add(user);
         }
