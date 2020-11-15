@@ -1,9 +1,6 @@
 package ru.sergei.komarov.med.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.med.exception.DoctorNotFoundException;
 import ru.sergei.komarov.med.exception.PatientNotFoundException;
 import ru.sergei.komarov.med.model.Doctor;
@@ -16,7 +13,8 @@ import ru.sergei.komarov.med.service.PatientTicketService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/patientTickets")
 public class PatientTicketController extends BasicDataController<PatientTicket, Integer> {
     private final DoctorService doctorService;
     private final PatientService patientService;

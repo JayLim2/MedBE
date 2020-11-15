@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/init")
+@RequestMapping("/init")
 public class InitController {
 
     private UserService userService;

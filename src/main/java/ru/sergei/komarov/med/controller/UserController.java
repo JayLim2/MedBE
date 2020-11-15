@@ -36,7 +36,6 @@ public class UserController {
                             String phone, String password, String passwordRepeat,
                             String email, String firstName, String middleName, String lastName,
                             String registrationAddress, String insurancePolicyNumber) {
-
         User user = getUser(phone, email, password, passwordRepeat, firstName, middleName, lastName, roleName);
 
         Patient patient = new Patient();
@@ -53,7 +52,6 @@ public class UserController {
                            String phone, String password, String passwordRepeat,
                            String email, String firstName, String middleName, String lastName,
                            String cabinet, String specialization, List<String> medicalServices) {
-
         User user = getUser(phone, email, password, passwordRepeat, firstName, middleName, lastName, roleName);
 
         Doctor doctor = new Doctor();
@@ -88,7 +86,6 @@ public class UserController {
     private User getUser(String phone, String email, String password, String passwordRepeat,
                          String firstName, String middleName, String lastName,
                          String roleName) {
-
         User user = new User();
         user.setPhone(phone);
         user.setEmail(email);

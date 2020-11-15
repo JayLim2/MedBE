@@ -1,8 +1,9 @@
 package ru.sergei.komarov.med.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.exception.DoctorNotFoundException;
 import ru.sergei.komarov.med.exception.SpecializationNotFoundException;
 import ru.sergei.komarov.med.exception.UserNotFoundException;
@@ -15,7 +16,8 @@ import ru.sergei.komarov.med.service.UserService;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/doctors")
 public class DoctorController extends BasicDataController<Doctor, Integer> {
     private final UserService userService;
     private final DoctorSpecializationService doctorSpecializationService;

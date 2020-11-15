@@ -1,15 +1,17 @@
 package ru.sergei.komarov.med.controller;
 
 import com.google.gson.JsonObject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.exception.UserNotFoundException;
 import ru.sergei.komarov.med.model.Patient;
 import ru.sergei.komarov.med.model.User;
 import ru.sergei.komarov.med.service.PatientService;
 import ru.sergei.komarov.med.service.UserService;
 
-@Controller
+@RestController
+@RequestMapping("/api/patients")
 public class PatientController extends BasicDataController<Patient, Integer> {
     private final UserService userService;
 
