@@ -28,9 +28,9 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("/get/{id}")
-    public User getById(@PathVariable String id) {
-        return userService.getById(id);
+    @GetMapping("/get/{phone}")
+    public User getById(@PathVariable String phone) {
+        return userService.getByPhone(phone);
     }
 
     @PutMapping("/save/patient")

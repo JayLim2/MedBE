@@ -13,8 +13,12 @@ public class UserService extends BasicDataService<User, String> implements UserD
         super(repository);
     }
 
+    public User getByPhone(String phone) {
+        return ((UserRepository) repository).findByPhone(phone);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return ((UserRepository) repository).findByPhone(login);
+        return getByPhone(login);
     }
 }
