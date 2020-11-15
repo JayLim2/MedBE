@@ -1,5 +1,7 @@
 package ru.sergei.komarov.med.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import java.util.Collections;
 @Entity
 @Table(name = "users")
 @Data
+@JsonIgnoreProperties({"password", "authorities"})
 public class User implements UserDetails {
 
     @Id
@@ -33,6 +36,7 @@ public class User implements UserDetails {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonManagedReference
     private Role role;
 
     @Override

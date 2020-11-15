@@ -2,7 +2,7 @@ package ru.sergei.komarov.med.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.CrudRepository;
-import ru.sergei.komarov.med.controller.DataController;
+import ru.sergei.komarov.med.controller.data.DataController;
 
 import java.util.List;
 

@@ -1,11 +1,8 @@
-package ru.sergei.komarov.med.controller;
+package ru.sergei.komarov.med.controller.data;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.med.model.*;
 import ru.sergei.komarov.med.service.*;
 
@@ -29,6 +26,11 @@ public class UserController {
     @GetMapping("/get/all")
     public List<User> getAll() {
         return userService.getAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public User getById(@PathVariable String id) {
+        return userService.getById(id);
     }
 
     @PutMapping("/save/patient")

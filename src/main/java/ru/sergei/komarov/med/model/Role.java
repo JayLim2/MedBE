@@ -1,5 +1,7 @@
 package ru.sergei.komarov.med.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -15,9 +17,11 @@ import java.util.List;
 public class Role implements GrantedAuthority {
 
     @Id
+    @JsonValue
     private String name;
 
     @OneToMany(mappedBy = "role")
+    @JsonBackReference
     private List<User> users;
 
     @Override

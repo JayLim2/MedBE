@@ -1,4 +1,4 @@
-package ru.sergei.komarov.med.controller;
+package ru.sergei.komarov.med.controller.data;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

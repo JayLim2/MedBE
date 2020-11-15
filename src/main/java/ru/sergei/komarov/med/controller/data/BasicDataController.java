@@ -1,4 +1,4 @@
-package ru.sergei.komarov.med.controller;
+package ru.sergei.komarov.med.controller.data;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

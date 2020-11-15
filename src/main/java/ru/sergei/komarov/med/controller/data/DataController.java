@@ -1,4 +1,4 @@
-package ru.sergei.komarov.med.controller;
+package ru.sergei.komarov.med.controller.data;
 
 import java.util.List;
 
