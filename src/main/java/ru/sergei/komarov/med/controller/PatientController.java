@@ -1,6 +1,5 @@
 package ru.sergei.komarov.med.controller;
 
-import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +20,11 @@ public class PatientController extends BasicDataController<Patient, Integer> {
     }
 
     @GetMapping("/get/user")
-    public JsonObject getByUser(String phone) {
+    public Patient getByUser(String phone) {
         User user = userService.getById(phone);
         if (user == null) {
             throw new UserNotFoundException(phone);
         }
-        Patient patient = ((PatientService) service).getByUser(user);
-        return new JsonObject();
+        return ((PatientService) service).getByUser(user);
     }
 }
