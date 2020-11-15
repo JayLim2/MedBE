@@ -1,5 +1,7 @@
 package ru.sergei.komarov.med.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -14,9 +16,11 @@ import java.util.List;
 public class DoctorSpecialization {
 
     @Id
+    @JsonValue
     private String name;
 
     @OneToMany(mappedBy = "specialization")
+    @JsonBackReference
     private List<Doctor> doctors;
 
 }

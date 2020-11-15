@@ -15,6 +15,6 @@ public class UserService extends BasicDataService<User, String> implements UserD
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return getById(login);
+        return ((UserRepository) repository).findByPhone(login);
     }
 }

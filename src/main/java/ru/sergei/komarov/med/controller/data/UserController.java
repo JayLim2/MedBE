@@ -41,7 +41,8 @@ public class UserController {
         User user = getUser(phone, email, password, passwordRepeat, firstName, middleName, lastName, roleName);
 
         Patient patient = new Patient();
-        patient.setUser(user);
+        //FIXME 
+        //patient.setUser(user);
         patient.setRegistrationAddress(registrationAddress);
         patient.setInsurancePolicyNumber(insurancePolicyNumber);
         patientService.save(patient);
@@ -56,8 +57,9 @@ public class UserController {
                            String cabinet, String specialization, List<String> medicalServices) {
         User user = getUser(phone, email, password, passwordRepeat, firstName, middleName, lastName, roleName);
 
+        //FIXME
         Doctor doctor = new Doctor();
-        doctor.setUser(user);
+        //doctor.setUser(user);
         DoctorCabinet doctorCabinet = doctorCabinetService.getById(cabinet);
         if (doctorCabinet == null) {
             doctorCabinet = new DoctorCabinet();

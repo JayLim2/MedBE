@@ -12,11 +12,17 @@ import java.util.Collections;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @JsonIgnoreProperties({"password", "authorities"})
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+    @SequenceGenerator(name = "user_id_seq")
+    private int id;
+
+    @Column(unique = true)
     private String phone;
 
     @Column(nullable = false)

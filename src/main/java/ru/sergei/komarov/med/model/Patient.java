@@ -2,28 +2,21 @@ package ru.sergei.komarov.med.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "patients")
 @Data
-public class Patient {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_id_seq")
-    @SequenceGenerator(name = "patient_id_seq")
-    private int id;
+public class Patient extends User {
 
     @Column(name = "address", nullable = false)
     private String registrationAddress;
 
     @Column(nullable = false)
     private LocalDate birthday;
-
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private User user;
 
     @Column(name = "insurance_policy", nullable = false)
     private String insurancePolicyNumber;

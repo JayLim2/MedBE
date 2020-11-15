@@ -1,5 +1,6 @@
 package ru.sergei.komarov.med.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class MedicalService {
     private boolean isAvailable;
 
     @OneToMany(mappedBy = "medicalService")
+    @JsonBackReference
     private List<PatientTicket> patientTickets;
 
     @ManyToMany
@@ -30,6 +32,7 @@ public class MedicalService {
             joinColumns = {@JoinColumn(name = "med_service_name")},
             inverseJoinColumns = {@JoinColumn(name = "doctor_id")}
     )
+    @JsonBackReference
     private List<Doctor> doctors;
 
 }
