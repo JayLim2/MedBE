@@ -10,14 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.sergei.komarov.med.services.UsersService;
+import ru.sergei.komarov.med.service.UserService;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-    private final UsersService userService;
+    private final UserService userService;
 
-    public SecurityConfiguration(UsersService userService) {
+    public SecurityConfiguration(UserService userService) {
         this.userService = userService;
     }
 
