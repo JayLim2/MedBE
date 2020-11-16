@@ -1,5 +1,6 @@
 package ru.sergei.komarov.med.controller.data;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import ru.sergei.komarov.med.util.Utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,8 +115,10 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
         return ((PatientTicketService) service).getByPatientAndDoctorAndDateTimeBetween(patient, doctor, from, to);
     }
 
-    @GetMapping("/get/doctor/date/{doctorId}/")
-    public List<LocalDateTime> getFreeTimeListForDate(@PathVariable Integer doctorId, @RequestParam LocalDate date) {
+    @GetMapping("/get/doctor/date/{doctorId}")
+    public List<LocalDateTime> getFreeTimeListForDate(@PathVariable Integer doctorId,
+                                                      @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy'T'HH:mm") LocalDate date
+    ) {
         Doctor doctor = doctorService.getById(doctorId);
         Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getFreeTimeListForDate(doctor, date);
