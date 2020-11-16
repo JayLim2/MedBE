@@ -19,17 +19,17 @@ public class PatientTicket {
     @Column(name = "datetime", nullable = false)
     private LocalDateTime dateTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "medical_service", nullable = false)
     @JsonManagedReference
     private MedicalService medicalService;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "patient_id", nullable = false)
     @JsonManagedReference
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "doctor_id", nullable = false)
     @JsonManagedReference
     private Doctor doctor;
