@@ -9,6 +9,7 @@ import ru.sergei.komarov.med.service.user.DoctorService;
 import ru.sergei.komarov.med.service.user.PatientService;
 import ru.sergei.komarov.med.util.Utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -83,5 +84,12 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
         Doctor doctor = doctorService.getById(doctorId);
         Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getByPatientAndDoctorAndDateTimeBetween(patient, doctor, from, to);
+    }
+
+    @GetMapping("/get/doctor/date/{doctorId}/")
+    public List<LocalDateTime> getFreeTimeListForDate(@PathVariable Integer doctorId, @RequestParam LocalDate date) {
+        Doctor doctor = doctorService.getById(doctorId);
+        Utils.requireNonNull(doctor);
+        return ((PatientTicketService) service).getFreeTimeListForDate(doctor, date);
     }
 }
