@@ -15,8 +15,8 @@ import java.util.List;
 
 @Service
 public class PatientTicketService extends BasicDataService<PatientTicket, Integer> {
-    private final LocalTime startWorkingTime = LocalTime.parse("08");
-    private final LocalTime endWorkingTime = LocalTime.parse("20");
+    private final LocalTime startWorkingTime = LocalTime.parse("08:00");
+    private final LocalTime endWorkingTime = LocalTime.parse("20:00");
     private final List<LocalTime> possibleTicketTimes = new ArrayList<>();
 
     public PatientTicketService(PatientTicketRepository repository) {
