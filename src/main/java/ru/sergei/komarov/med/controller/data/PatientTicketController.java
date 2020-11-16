@@ -1,14 +1,13 @@
 package ru.sergei.komarov.med.controller.data;
 
 import org.springframework.web.bind.annotation.*;
-import ru.sergei.komarov.med.exception.DoctorNotFoundException;
-import ru.sergei.komarov.med.exception.PatientNotFoundException;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.Patient;
 import ru.sergei.komarov.med.model.PatientTicket;
 import ru.sergei.komarov.med.service.PatientTicketService;
 import ru.sergei.komarov.med.service.user.DoctorService;
 import ru.sergei.komarov.med.service.user.PatientService;
+import ru.sergei.komarov.med.util.Utils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,9 +31,7 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
     @GetMapping("/get/patient/{patientId}")
     public List<PatientTicket> getByPatient(@PathVariable int patientId) {
         Patient patient = patientService.getById(patientId);
-        if (patient == null) {
-            throw new PatientNotFoundException(patientId);
-        }
+        Utils.requireNonNull(patient);
         return ((PatientTicketService) service).getByPatient(patient);
     }
 
@@ -43,9 +40,7 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
                                                        @RequestParam LocalDateTime from,
                                                        @RequestParam LocalDateTime to) {
         Patient patient = patientService.getById(patientId);
-        if (patient == null) {
-            throw new PatientNotFoundException(patientId);
-        }
+        Utils.requireNonNull(patient);
         return ((PatientTicketService) service).getByPatientAndDateTimeBetween(patient, from, to);
     }
 
@@ -54,9 +49,7 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
     @GetMapping("/get/doctor/{doctorId}")
     public List<PatientTicket> getByDoctor(@PathVariable int doctorId) {
         Doctor doctor = doctorService.getById(doctorId);
-        if (doctor == null) {
-            throw new DoctorNotFoundException(doctorId);
-        }
+        Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getByDoctor(doctor);
     }
 
@@ -65,9 +58,7 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
                                                       @RequestParam LocalDateTime from,
                                                       @RequestParam LocalDateTime to) {
         Doctor doctor = doctorService.getById(doctorId);
-        if (doctor == null) {
-            throw new DoctorNotFoundException(doctorId);
-        }
+        Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getByDoctorAndDateTimeBetween(doctor, from, to);
     }
 
@@ -76,13 +67,9 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
     @GetMapping("/get/patientAndDoctor/{patientId}/{doctorId}")
     public List<PatientTicket> getByPatientAndDoctor(@PathVariable int patientId, @PathVariable int doctorId) {
         Patient patient = patientService.getById(patientId);
-        if (patient == null) {
-            throw new PatientNotFoundException(patientId);
-        }
+        Utils.requireNonNull(patient);
         Doctor doctor = doctorService.getById(doctorId);
-        if (doctor == null) {
-            throw new DoctorNotFoundException(doctorId);
-        }
+        Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getByPatientAndDoctor(patient, doctor);
     }
 
@@ -92,13 +79,9 @@ public class PatientTicketController extends BasicDataController<PatientTicket, 
                                                                 @RequestParam LocalDateTime from,
                                                                 @RequestParam LocalDateTime to) {
         Patient patient = patientService.getById(patientId);
-        if (patient == null) {
-            throw new PatientNotFoundException(patientId);
-        }
+        Utils.requireNonNull(patient);
         Doctor doctor = doctorService.getById(doctorId);
-        if (doctor == null) {
-            throw new DoctorNotFoundException(doctorId);
-        }
+        Utils.requireNonNull(doctor);
         return ((PatientTicketService) service).getByPatientAndDoctorAndDateTimeBetween(patient, doctor, from, to);
     }
 }
