@@ -68,7 +68,7 @@ public class UserController {
             doctorCabinet.setSpecialization(specialization);
         }
         doctor.setCabinet(doctorCabinet);
-        DoctorSpecialization doctorSpecialization = doctorSpecializationService.getById(specialization);
+        DoctorSpecialization doctorSpecialization = doctorSpecializationService.getByName(specialization);
         if (doctorSpecialization == null) {
             doctorSpecialization = new DoctorSpecialization();
             doctorSpecialization.setName(specialization);

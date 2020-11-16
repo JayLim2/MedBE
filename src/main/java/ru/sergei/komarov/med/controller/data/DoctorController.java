@@ -46,7 +46,7 @@ public class DoctorController extends BasicDataController<Doctor, Integer> {
 
     @GetMapping("/get/spec/{specializationName}")
     public List<Doctor> getBySpecialization(@PathVariable String specializationName) {
-        DoctorSpecialization specialization = doctorSpecializationService.getById(specializationName);
+        DoctorSpecialization specialization = doctorSpecializationService.getByName(specializationName);
         if (specialization == null) {
             throw new SpecializationNotFoundException(specializationName);
         }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,7 +13,11 @@ import java.util.List;
 public class DoctorSpecialization {
 
     @Id
-    @JsonValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "specialization_id_seq")
+    @SequenceGenerator(name = "specialization_id_seq")
+    private int id;
+
+    @Column(unique = true)
     private String name;
 
     @OneToMany(mappedBy = "specialization")

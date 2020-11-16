@@ -78,13 +78,12 @@ public class InitController {
             adminRole.setName("ROLE_ADMIN");
         }
 
-
         for (int i = 1; i <= 5; i++) {
             Patient patient = new Patient();
             patient.setPhone("patient" + i);
             patient.setPassword(passwordEncoder.encode("root"));
             patient.setFirstName("Пациент");
-            patient.setLastName("Пациентов");
+            patient.setLastName("(" + i + ") Пациентов");
             patient.setRole(patientRole);
             patient.setRegistrationAddress("Адрес " + i);
             patient.setBirthday(LocalDate.now());
@@ -106,7 +105,7 @@ public class InitController {
             doctor.setPhone("doctor" + i);
             doctor.setPassword(passwordEncoder.encode("root"));
             doctor.setFirstName("Врач");
-            doctor.setLastName("Лечилов");
+            doctor.setLastName("(" + i + ") Лечилов");
             doctor.setRole(doctorRole);
             doctor.setWorkingNow(i % 2 == 1);
             doctor.setSpecialization(specialization);
@@ -119,7 +118,7 @@ public class InitController {
             user.setPhone("admin" + i);
             user.setPassword(passwordEncoder.encode("root"));
             user.setFirstName("Админ");
-            user.setLastName("Админов");
+            user.setLastName("(" + i + ") Админов");
             user.setRole(adminRole);
             users.add(user);
         }

@@ -10,16 +10,16 @@ import ru.sergei.komarov.med.service.DoctorSpecializationService;
 
 @RestController
 @RequestMapping("/api/doctorSpecializations")
-public class DoctorSpecializationController extends BasicDataController<DoctorSpecialization, String> {
+public class DoctorSpecializationController extends BasicDataController<DoctorSpecialization, Integer> {
     public DoctorSpecializationController(DoctorSpecializationService service) {
         super(service);
     }
 
     @GetMapping("/get")
-    public DoctorSpecialization getById(@RequestParam String name) {
-        DoctorSpecialization specialization = service.getById(name);
+    public DoctorSpecialization getById(@RequestParam int id) {
+        DoctorSpecialization specialization = service.getById(id);
         if (specialization == null) {
-            throw new SpecializationNotFoundException(name);
+            throw new SpecializationNotFoundException(Integer.toString(id));
         }
         return specialization;
     }
