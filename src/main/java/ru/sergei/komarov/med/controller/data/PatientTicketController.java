@@ -6,9 +6,9 @@ import ru.sergei.komarov.med.exception.PatientNotFoundException;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.Patient;
 import ru.sergei.komarov.med.model.PatientTicket;
-import ru.sergei.komarov.med.service.DoctorService;
-import ru.sergei.komarov.med.service.PatientService;
 import ru.sergei.komarov.med.service.PatientTicketService;
+import ru.sergei.komarov.med.service.user.DoctorService;
+import ru.sergei.komarov.med.service.user.PatientService;
 
 import java.time.LocalDateTime;
 import java.util.List;

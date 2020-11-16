@@ -8,7 +8,7 @@ import ru.sergei.komarov.med.model.*;
 import ru.sergei.komarov.med.service.DoctorCabinetService;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
 import ru.sergei.komarov.med.service.RoleService;
-import ru.sergei.komarov.med.service.UserService;
+import ru.sergei.komarov.med.service.user.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

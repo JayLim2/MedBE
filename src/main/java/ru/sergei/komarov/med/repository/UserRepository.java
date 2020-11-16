@@ -1,8 +1,11 @@
 package ru.sergei.komarov.med.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import ru.sergei.komarov.med.model.User;
 
-public interface UserRepository extends CrudRepository<User, String> {
-    User findByPhone(String phone);
+@Repository
+public interface UserRepository<T extends User> extends CrudRepository<T, Integer> {
+
+    T findByPhoneOrEmail(String phone, String email);
 }

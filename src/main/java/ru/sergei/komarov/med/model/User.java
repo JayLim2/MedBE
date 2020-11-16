@@ -14,7 +14,7 @@ import java.util.Collections;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-@JsonIgnoreProperties({"password", "authorities"})
+@JsonIgnoreProperties({"password", "authorities", "username"})
 public class User implements UserDetails {
 
     @Id
@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(unique = true)
     private String email;
 
     @Column(name = "first_name", nullable = false)

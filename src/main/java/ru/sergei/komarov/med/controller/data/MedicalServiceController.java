@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.exception.DoctorNotFoundException;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.MedicalService;
-import ru.sergei.komarov.med.service.DoctorService;
 import ru.sergei.komarov.med.service.MedicalServiceService;
+import ru.sergei.komarov.med.service.user.DoctorService;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class MedicalServiceController extends BasicDataController<MedicalService
     }
 
     @GetMapping("/doctor/{doctorId}")
-    public List<MedicalService> getByDoctorId(@PathVariable int doctorId) {
+    public List<MedicalService> getByDoctorId(@PathVariable Integer doctorId) {
         Doctor doctor = doctorsService.getById(doctorId);
         if (doctor == null) {
             throw new DoctorNotFoundException(doctorId);

@@ -1,15 +1,10 @@
 package ru.sergei.komarov.med.repository;
 
-import org.springframework.data.repository.CrudRepository;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.DoctorSpecialization;
 
 import java.util.List;
 
-public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
-
+public interface DoctorRepository extends UserRepository<Doctor> {
     List<Doctor> findBySpecialization(DoctorSpecialization specialization);
-
-    //Doctor findByUser(User user);
-
 }

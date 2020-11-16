@@ -1,4 +1,4 @@
-package ru.sergei.komarov.med.service;
+package ru.sergei.komarov.med.service.user;
 
 import org.springframework.stereotype.Service;
 import ru.sergei.komarov.med.model.Doctor;
@@ -8,7 +8,7 @@ import ru.sergei.komarov.med.repository.DoctorRepository;
 import java.util.List;
 
 @Service
-public class DoctorService extends BasicDataService<Doctor, Integer> {
+public class DoctorService extends BasicUserService<Doctor> {
     public DoctorService(DoctorRepository repository) {
         super(repository);
     }
@@ -16,8 +16,4 @@ public class DoctorService extends BasicDataService<Doctor, Integer> {
     public List<Doctor> getBySpecialization(DoctorSpecialization specialization) {
         return ((DoctorRepository) repository).findBySpecialization(specialization);
     }
-
-/*    public Doctor getByUser(User user) {
-        return ((DoctorRepository) repository).findByUser(user);
-    }*/
 }

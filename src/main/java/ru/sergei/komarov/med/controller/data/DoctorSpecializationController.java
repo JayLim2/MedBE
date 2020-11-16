@@ -1,9 +1,6 @@
 package ru.sergei.komarov.med.controller.data;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.med.exception.SpecializationNotFoundException;
 import ru.sergei.komarov.med.model.DoctorSpecialization;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
@@ -15,8 +12,8 @@ public class DoctorSpecializationController extends BasicDataController<DoctorSp
         super(service);
     }
 
-    @GetMapping("/get")
-    public DoctorSpecialization getById(@RequestParam int id) {
+    @Override
+    public DoctorSpecialization getById(@PathVariable Integer id) {
         DoctorSpecialization specialization = service.getById(id);
         if (specialization == null) {
             throw new SpecializationNotFoundException(Integer.toString(id));

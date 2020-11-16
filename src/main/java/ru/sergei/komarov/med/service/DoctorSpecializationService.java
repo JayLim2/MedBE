@@ -11,6 +11,6 @@ public class DoctorSpecializationService extends BasicDataService<DoctorSpeciali
     }
 
     public DoctorSpecialization getByName(String name) {
-        return ((DoctorSpecializationRepository)repository).findByName(name);
+        return ((DoctorSpecializationRepository) repository).findByName(name);
     }
 }
