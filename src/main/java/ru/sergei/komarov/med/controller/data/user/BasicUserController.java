@@ -12,8 +12,8 @@ public abstract class BasicUserController<T extends User> extends BasicDataContr
         super(service);
     }
 
-    @GetMapping("/{login}")
-    public User getById(@PathVariable String login) {
+    @GetMapping("/get/login/{login}")
+    public User getByLogin(@PathVariable String login) {
         return ((BasicUserService<?>) service).getByLogin(login);
     }
 }

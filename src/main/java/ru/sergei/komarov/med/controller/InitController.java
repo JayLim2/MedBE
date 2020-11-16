@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.model.*;
 import ru.sergei.komarov.med.service.DoctorCabinetService;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
-import ru.sergei.komarov.med.service.RoleService;
 import ru.sergei.komarov.med.service.user.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -22,36 +20,22 @@ public class InitController {
     private final DoctorSpecializationService doctorSpecializationService;
     private final DoctorCabinetService doctorCabinetService;
     private final UserService userService;
-    private final RoleService roleService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public InitController(DoctorSpecializationService doctorSpecializationService,
                           DoctorCabinetService doctorCabinetService,
                           UserService userService,
-                          RoleService roleService,
                           BCryptPasswordEncoder passwordEncoder) {
         this.doctorSpecializationService = doctorSpecializationService;
         this.doctorCabinetService = doctorCabinetService;
 
         this.userService = userService;
-        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/all")
     public void initialize() {
-        initRoles();
         initUsers();
-    }
-
-    @GetMapping("/roles")
-    public void initRoles() {
-        Arrays.asList("ROLE_PATIENT", "ROLE_DOCTOR", "ROLE_ADMIN")
-                .forEach(roleName -> {
-                    Role role = new Role();
-                    role.setName(roleName);
-                    roleService.save(role);
-                });
     }
 
     @GetMapping("/users")
@@ -60,31 +44,13 @@ public class InitController {
         List<DoctorSpecialization> specializations = new ArrayList<>();
         List<DoctorCabinet> cabinets = new ArrayList<>();
 
-        Role patientRole = roleService.getById("ROLE_PATIENT");
-        if (patientRole == null) {
-            patientRole = new Role();
-            patientRole.setName("ROLE_PATIENT");
-        }
-
-        Role doctorRole = roleService.getById("ROLE_DOCTOR");
-        if (doctorRole == null) {
-            doctorRole = new Role();
-            doctorRole.setName("ROLE_DOCTOR");
-        }
-
-        Role adminRole = roleService.getById("ROLE_ADMIN");
-        if (adminRole == null) {
-            adminRole = new Role();
-            adminRole.setName("ROLE_ADMIN");
-        }
-
         for (int i = 1; i <= 5; i++) {
             Patient patient = new Patient();
             patient.setPhone("patient" + i);
             patient.setPassword(passwordEncoder.encode("root"));
             patient.setFirstName("Пациент");
             patient.setLastName("(" + i + ") Пациентов");
-            patient.setRole(patientRole);
+            patient.setRole(Role.PATIENT);
             patient.setRegistrationAddress("Адрес " + i);
             patient.setBirthday(LocalDate.now());
             patient.setInsurancePolicyNumber("ОМС " + i);
@@ -106,7 +72,7 @@ public class InitController {
             doctor.setPassword(passwordEncoder.encode("root"));
             doctor.setFirstName("Врач");
             doctor.setLastName("(" + i + ") Лечилов");
-            doctor.setRole(doctorRole);
+            doctor.setRole(Role.DOCTOR);
             doctor.setWorkingNow(i % 2 == 1);
             doctor.setSpecialization(specialization);
             doctor.setCabinet(cabinet);
@@ -119,7 +85,7 @@ public class InitController {
             user.setPassword(passwordEncoder.encode("root"));
             user.setFirstName("Админ");
             user.setLastName("(" + i + ") Админов");
-            user.setRole(adminRole);
+            user.setRole(Role.ADMIN);
             users.add(user);
         }
         doctorCabinetService.saveList(cabinets);
