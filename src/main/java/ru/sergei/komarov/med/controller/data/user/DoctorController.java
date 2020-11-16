@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sergei.komarov.med.controller.data.BasicDataController;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.DoctorSpecialization;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctors")
-public class DoctorController extends BasicDataController<Doctor, Integer> {
+public class DoctorController extends BasicUserController<Doctor> {
     private final DoctorSpecializationService doctorSpecializationService;
 
     public DoctorController(DoctorService service, DoctorSpecializationService doctorSpecializationService) {
