@@ -36,7 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**").hasRole("ADMIN")
+                //FIXME Temporary fix. Need to analyze roles and refactor config
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/data/**").hasAnyRole("USER", "SUPPORT", "ADMIN")
                 .antMatchers("/", "/checkHealth", "/resources/**", "/init/**").permitAll()
                 .anyRequest().authenticated()
@@ -78,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200")
+                .allowedOrigins("*")
                 .allowedMethods("*");
     }
 
