@@ -21,12 +21,12 @@ public abstract class BasicDataController<T, ID> {
         return service.getAll();
     }
 
-    @PutMapping("/put")
+    @PutMapping("/save")
     public T save(@RequestBody T object) {
         return service.save(object);
     }
 
-    @PutMapping("/put/list")
+    @PutMapping("/save/list")
     public List<T> saveList(@RequestBody List<T> list) {
         return service.saveList(list);
     }

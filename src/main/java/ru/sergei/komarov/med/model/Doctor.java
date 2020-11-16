@@ -14,19 +14,19 @@ public class Doctor extends User {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("Doctor-DoctorSpecialization")
     private DoctorSpecialization specialization;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("Doctor-DoctorCabinet")
     private DoctorCabinet cabinet;
 
     @Column(name = "working_now")
     private boolean isWorkingNow;
 
     @OneToMany(mappedBy = "doctor")
-    @JsonBackReference
+    @JsonManagedReference("PatientTicket-Doctor")
     private List<PatientTicket> patientTickets;
 
     @ManyToMany
@@ -35,7 +35,7 @@ public class Doctor extends User {
             joinColumns = {@JoinColumn(name = "doctor_id")},
             inverseJoinColumns = {@JoinColumn(name = "med_service_name")}
     )
-    @JsonBackReference
+    //TODO Fix it
     private List<MedicalService> medicalServices;
 
 }

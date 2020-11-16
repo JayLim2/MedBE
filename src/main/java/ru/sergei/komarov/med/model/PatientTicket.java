@@ -1,6 +1,6 @@
 package ru.sergei.komarov.med.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,17 +21,17 @@ public class PatientTicket {
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "medical_service", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("PatientTicket-MedicalService")
     private MedicalService medicalService;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "patient_id", nullable = false)
-    @JsonManagedReference
+    //@JsonManagedReference("PatientTicket-Patient")
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "doctor_id", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("PatientTicket-Doctor")
     private Doctor doctor;
 
     private String prescriptions;
