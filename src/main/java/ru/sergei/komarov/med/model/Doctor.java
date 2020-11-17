@@ -1,7 +1,6 @@
 package ru.sergei.komarov.med.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,19 +13,17 @@ public class Doctor extends User {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonBackReference("Doctor-DoctorSpecialization")
     private DoctorSpecialization specialization;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonBackReference("Doctor-DoctorCabinet")
     private DoctorCabinet cabinet;
 
     @Column(name = "working_now")
     private boolean isWorkingNow;
 
     @OneToMany(mappedBy = "doctor")
-    @JsonManagedReference("PatientTicket-Doctor")
+    @JsonIgnore
     private List<PatientTicket> patientTickets;
 
     @ManyToMany

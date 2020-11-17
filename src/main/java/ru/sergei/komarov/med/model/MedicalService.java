@@ -1,6 +1,6 @@
 package ru.sergei.komarov.med.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +23,7 @@ public class MedicalService {
     private boolean isAvailable;
 
     @OneToMany(mappedBy = "medicalService")
-    @JsonManagedReference("PatientTicket-MedicalService")
+    @JsonIgnore
     private List<PatientTicket> patientTickets;
 
     @ManyToMany
