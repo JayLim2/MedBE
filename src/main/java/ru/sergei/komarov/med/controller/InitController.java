@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.model.*;
 import ru.sergei.komarov.med.service.DoctorCabinetService;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
+import ru.sergei.komarov.med.service.MedicalServiceService;
 import ru.sergei.komarov.med.service.user.UserService;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/init")
@@ -21,16 +23,19 @@ public class InitController {
 
     private final DoctorSpecializationService doctorSpecializationService;
     private final DoctorCabinetService doctorCabinetService;
+    private final MedicalServiceService medicalServiceService;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public InitController(DoctorSpecializationService doctorSpecializationService,
                           DoctorCabinetService doctorCabinetService,
+                          MedicalServiceService medicalServiceService,
                           UserService userService,
                           BCryptPasswordEncoder passwordEncoder) {
+
         this.doctorSpecializationService = doctorSpecializationService;
         this.doctorCabinetService = doctorCabinetService;
-
+        this.medicalServiceService = medicalServiceService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -81,6 +86,21 @@ public class InitController {
                 "Сергеевич", "Ярополкович", "Евпатиевич", "Никитич"
         ));
 
+        List<MedicalService> medServices = new ArrayList<>(Arrays.asList(
+                "Услуга 1", "Услуга 2", "Неведомая услуга",
+                "Очень дорогая услуга", "Загнуть гвоздь по ОМС"
+        )).stream().map(name -> {
+            MedicalService medicalService = new MedicalService();
+            medicalService.setName(name);
+            medicalService.setAvailable(new Random().nextBoolean());
+            medicalService.setDescription("Some description for " + name);
+            medicalService.setRecommendations(
+                    new Random().nextBoolean() ? "Есть рекомендации" : null
+            );
+            return medicalService;
+        }).collect(Collectors.toList());
+        medicalServiceService.saveList(medServices);
+
         for (int i = 1; i <= 5; i++) {
             Patient patient = new Patient();
             patient.setPhone(getPhone());
@@ -105,6 +125,15 @@ public class InitController {
             cabinet.setRecommendedDoctorsCount(i);
             cabinets.add(cabinet);
 
+            int medServicesCount = new Random().nextInt(medServices.size());
+            List<MedicalService> doctorMedServices = new ArrayList<>(medServicesCount);
+            for (int j = 0; j < medServicesCount; j++) {
+                MedicalService medicalService = medServices.get(
+                        new Random().nextInt(medServices.size())
+                );
+                doctorMedServices.add(medicalService);
+            }
+
             Doctor doctor = new Doctor();
             doctor.setPhone(getPhone());
             doctor.setPassword(passwordEncoder.encode("root"));
@@ -115,6 +144,7 @@ public class InitController {
             doctor.setWorkingNow(i % 2 == 1);
             doctor.setSpecialization(specialization);
             doctor.setCabinet(cabinet);
+            doctor.setMedicalServices(doctorMedServices);
             users.add(doctor);
         }
 

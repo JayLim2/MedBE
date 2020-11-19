@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.med.model.Doctor;
 import ru.sergei.komarov.med.model.DoctorSpecialization;
+import ru.sergei.komarov.med.model.MedicalService;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
+import ru.sergei.komarov.med.service.MedicalServiceService;
 import ru.sergei.komarov.med.service.user.DoctorService;
 import ru.sergei.komarov.med.util.Utils;
 
@@ -16,10 +18,13 @@ import java.util.List;
 @RequestMapping("/api/doctors")
 public class DoctorController extends BasicUserController<Doctor> {
     private final DoctorSpecializationService doctorSpecializationService;
+    private final MedicalServiceService medicalServiceService;
 
-    public DoctorController(DoctorService service, DoctorSpecializationService doctorSpecializationService) {
+    public DoctorController(DoctorService service, DoctorSpecializationService doctorSpecializationService,
+                            MedicalServiceService medicalServiceService) {
         super(service);
         this.doctorSpecializationService = doctorSpecializationService;
+        this.medicalServiceService = medicalServiceService;
     }
 
     @Override
@@ -34,5 +39,12 @@ public class DoctorController extends BasicUserController<Doctor> {
         DoctorSpecialization specialization = doctorSpecializationService.getByName(specializationName);
         Utils.requireNonNull(specialization);
         return ((DoctorService) service).getBySpecialization(specialization);
+    }
+
+    @GetMapping("/get/medService/{medServiceName}")
+    public List<Doctor> getByMedServiceName(@PathVariable String medServiceName) {
+        MedicalService medicalService = medicalServiceService.getById(medServiceName);
+        Utils.requireNonNull(medicalService);
+        return ((DoctorService) service).getByMedicalService(medicalService);
     }
 }
