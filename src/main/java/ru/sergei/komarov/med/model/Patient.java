@@ -1,5 +1,6 @@
 package ru.sergei.komarov.med.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ public class Patient extends User {
     private String registrationAddress;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd MMM yyyy")
     private LocalDate birthday;
 
     @Column(name = "insurance_policy", nullable = false)
