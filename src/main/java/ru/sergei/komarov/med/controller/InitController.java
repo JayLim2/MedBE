@@ -57,13 +57,7 @@ public class InitController {
     public String getRandomString(List<String> strings) {
         Random random = new Random();
         int size = strings.size();
-        if (size == 1) {
-            return strings.get(0);
-        } else {
-            String value = strings.get(random.nextInt(size));
-            strings.remove(value);
-            return value;
-        }
+        return strings.get(random.nextInt(size));
     }
 
     public <T> T getRandomItem(List<T> items) {
