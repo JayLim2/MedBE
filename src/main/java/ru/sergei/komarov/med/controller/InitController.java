@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/init")
@@ -42,7 +43,15 @@ public class InitController {
 
     @RequestMapping("/all")
     public void initialize() {
+        clearAll();
         initUsers();
+    }
+
+    private void clearAll() {
+        this.userService.deleteAll();
+        this.medicalServiceService.deleteAll();
+        this.doctorSpecializationService.deleteAll();
+        this.doctorCabinetService.deleteAll();
     }
 
     public String getRandomString(List<String> strings) {
@@ -57,6 +66,10 @@ public class InitController {
         }
     }
 
+    public <T> T getRandomItem(List<T> items) {
+        return items.get(new Random().nextInt(items.size()));
+    }
+
     private long phone = 7_900_100_00_00L;
 
     public String getPhone() {
@@ -66,13 +79,6 @@ public class InitController {
     @GetMapping("/users")
     public void initUsers() {
         List<User> users = new ArrayList<>();
-        List<DoctorSpecialization> specializations = new ArrayList<>();
-        List<DoctorCabinet> cabinets = new ArrayList<>();
-
-        List<String> specs = new ArrayList<>(Arrays.asList(
-                "Врач общей практики", "Терапевт", "Кардиолог",
-                "Эндокринолог", "Стоматолог", "Диагност"
-        ));
 
         List<String> firstNames = new ArrayList<>(Arrays.asList(
                 "Иван", "Игорь", "Михаил", "Виктор", "Сергей",
@@ -86,10 +92,10 @@ public class InitController {
                 "Сергеевич", "Ярополкович", "Евпатиевич", "Никитич"
         ));
 
-        List<MedicalService> medServices = new ArrayList<>(Arrays.asList(
+        List<MedicalService> medServices = Stream.of(
                 "Услуга 1", "Услуга 2", "Неведомая услуга",
                 "Очень дорогая услуга", "Загнуть гвоздь по ОМС"
-        )).stream().map(name -> {
+        ).map(name -> {
             MedicalService medicalService = new MedicalService();
             medicalService.setName(name);
             medicalService.setAvailable(new Random().nextBoolean());
@@ -101,7 +107,30 @@ public class InitController {
         }).collect(Collectors.toList());
         medicalServiceService.saveList(medServices);
 
-        for (int i = 1; i <= 5; i++) {
+        List<DoctorSpecialization> specs = Stream.of(
+                "Врач общей практики", "Терапевт", "Кардиолог",
+                "Эндокринолог", "Стоматолог", "Диагност"
+        ).map((specStr) -> {
+            DoctorSpecialization specialization = new DoctorSpecialization();
+            specialization.setName(specStr);
+            return specialization;
+        }).collect(Collectors.toList());
+        doctorSpecializationService.saveList(specs);
+
+        List<DoctorCabinet> cabinets = Stream.of(
+                "101", "102", "103", "104", "105",
+                "201", "202", "203", "204-1", "204-2", "205",
+                "311"
+        ).map(cabStr -> {
+            DoctorCabinet cabinet = new DoctorCabinet();
+            cabinet.setName(cabStr);
+            cabinet.setRecommendedDoctorsCount(new Random().nextInt());
+            cabinet.setSpecialization("spec of " + cabStr);
+            return cabinet;
+        }).collect(Collectors.toList());
+        doctorCabinetService.saveList(cabinets);
+
+        for (int i = 1; i <= 50; i++) {
             Patient patient = new Patient();
             patient.setPhone(getPhone());
             patient.setPassword(passwordEncoder.encode("root"));
@@ -115,16 +144,19 @@ public class InitController {
             users.add(patient);
         }
 
-        for (int i = 1; i <= 3; i++) {
-            DoctorSpecialization specialization = new DoctorSpecialization();
-            specialization.setName(getRandomString(specs));
-            specializations.add(specialization);
+        firstNames = new ArrayList<>(Arrays.asList(
+                "Иван", "Игорь", "Михаил", "Виктор", "Сергей",
+                "Ярополк", "Евпатий", "Никита"
+        ));
+        lastNames = new ArrayList<>(Arrays.asList(
+                "Иванов", "Петров", "Кузнецов", "Баранов", "Синицын"
+        ));
+        middleNames = new ArrayList<>(Arrays.asList(
+                "Иванович", "Игоревич", "Михайлович", "Викторович",
+                "Сергеевич", "Ярополкович", "Евпатиевич", "Никитич"
+        ));
 
-            DoctorCabinet cabinet = new DoctorCabinet();
-            cabinet.setName(Integer.toString(i));
-            cabinet.setRecommendedDoctorsCount(i);
-            cabinets.add(cabinet);
-
+        for (int i = 1; i <= 10; i++) {
             int medServicesCount = new Random().nextInt(medServices.size());
             List<MedicalService> doctorMedServices = new ArrayList<>(medServicesCount);
             for (int j = 0; j < medServicesCount; j++) {
@@ -142,8 +174,8 @@ public class InitController {
             doctor.setMiddleName(getRandomString(middleNames));
             doctor.setRole(Role.DOCTOR);
             doctor.setWorkingNow(i % 2 == 1);
-            doctor.setSpecialization(specialization);
-            doctor.setCabinet(cabinet);
+            doctor.setSpecialization(getRandomItem(specs));
+            doctor.setCabinet(getRandomItem(cabinets));
             doctor.setMedicalServices(doctorMedServices);
             users.add(doctor);
         }
@@ -158,8 +190,6 @@ public class InitController {
             user.setRole(Role.ADMIN);
             users.add(user);
         }
-        doctorCabinetService.saveList(cabinets);
-        doctorSpecializationService.saveList(specializations);
         userService.saveList(users);
     }
 }

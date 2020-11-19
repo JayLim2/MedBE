@@ -1,6 +1,7 @@
 package ru.sergei.komarov.med.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,7 +33,7 @@ public class Doctor extends User {
             joinColumns = {@JoinColumn(name = "doctor_id")},
             inverseJoinColumns = {@JoinColumn(name = "med_service_name")}
     )
-    //TODO Fix it
+    @JsonIgnoreProperties("doctors")
     private List<MedicalService> medicalServices;
 
 }
