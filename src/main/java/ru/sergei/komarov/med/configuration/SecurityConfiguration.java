@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
                 //FIXME Temporary fix. Need to analyze roles and refactor config
@@ -43,32 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-
-//        httpSecurity
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                //Доступ только для незарегистрированных пользователей
-//                .antMatchers("/registration").not().fullyAuthenticated()
-//                //Доступ только для пользователей с ролью Администратор
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                //Доступ только для пользователей с ролью Пользователь
-//                .antMatchers("/issues").hasRole("USER")
-//                //Доступ разрешен всем пользователям
-//                .antMatchers("/", "/api/**", "/init/**", "/resources/**").permitAll()
-//                //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated()
-//                .and()
-//                //Настройка для входа в систему
-//                .formLogin()
-//                .loginPage("/login")
-//                //Перенарпавление на главную страницу после успешного входа
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .logoutSuccessUrl("/");
     }
 
     @Autowired
