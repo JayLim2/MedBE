@@ -13,7 +13,7 @@ import java.util.Collections;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-@JsonIgnoreProperties({"password", "authorities", "username"})
+@JsonIgnoreProperties({"authorities", "username"})
 public class User implements UserDetails {
 
     @Id

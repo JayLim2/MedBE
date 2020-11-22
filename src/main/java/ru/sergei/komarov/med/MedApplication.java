@@ -5,10 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
+import java.util.Locale;
+
 @SpringBootApplication
 public class MedApplication {
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
+
         ApplicationContext applicationContext = SpringApplication.run(
                 MedApplication.class,
                 args
