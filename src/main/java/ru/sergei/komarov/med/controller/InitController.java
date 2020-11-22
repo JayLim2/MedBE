@@ -27,6 +27,7 @@ public class InitController {
     private final MedicalServiceService medicalServiceService;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private long phone = 7_900_100_00_00L;
 
     public InitController(DoctorSpecializationService doctorSpecializationService,
                           DoctorCabinetService doctorCabinetService,
@@ -63,8 +64,6 @@ public class InitController {
     public <T> T getRandomItem(List<T> items) {
         return items.get(new Random().nextInt(items.size()));
     }
-
-    private long phone = 7_900_100_00_00L;
 
     public String getPhone() {
         return Long.toString(phone++);
