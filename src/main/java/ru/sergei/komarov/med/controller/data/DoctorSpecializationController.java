@@ -7,6 +7,8 @@ import ru.sergei.komarov.med.model.DoctorSpecialization;
 import ru.sergei.komarov.med.service.DoctorSpecializationService;
 import ru.sergei.komarov.med.util.Utils;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/doctorSpecializations")
 public class DoctorSpecializationController extends BasicDataController<DoctorSpecialization, Integer> {
@@ -19,5 +21,10 @@ public class DoctorSpecializationController extends BasicDataController<DoctorSp
         DoctorSpecialization specialization = service.getById(id);
         Utils.requireNonNull(specialization);
         return specialization;
+    }
+
+    @RequestMapping("/get/allAvailable")
+    public Set<DoctorSpecialization> getAllAvailable() {
+        return ((DoctorSpecializationService) service).getAllAvailable();
     }
 }
