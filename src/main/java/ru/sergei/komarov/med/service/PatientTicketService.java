@@ -6,11 +6,11 @@ import ru.sergei.komarov.med.model.Patient;
 import ru.sergei.komarov.med.model.PatientTicket;
 import ru.sergei.komarov.med.repository.PatientTicketRepository;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -53,10 +53,7 @@ public class PatientTicketService extends BasicDataService<PatientTicket, Intege
     }
 
     public List<LocalDateTime> getFreeTimeListForDate(Doctor doctor, LocalDate date) {
-        if (date.getDayOfWeek().getValue() >= 6) {
-            return Collections.emptyList();
-        }
-        List<LocalDateTime> freeTimes = createDataTimes(date, possibleTicketTimes);
+        List<LocalDateTime> freeTimes = createDateTimes(date, possibleTicketTimes);
         List<PatientTicket> tickets = ((PatientTicketRepository) repository).findByDoctorAndDateTimeBetween(
                 doctor,
                 date.atTime(startWorkingTime),
@@ -68,11 +65,23 @@ public class PatientTicketService extends BasicDataService<PatientTicket, Intege
         return freeTimes;
     }
 
-    private List<LocalDateTime> createDataTimes(LocalDate date, List<LocalTime> times) {
-        List<LocalDateTime> localDateTimes = new ArrayList<>();
-        for (LocalTime time : times) {
-            localDateTimes.add(LocalDateTime.of(date, time));
+    private List<LocalDateTime> createDateTimes(LocalDate date, List<LocalTime> times) {
+        int periodCount = 14;
+        int currentDay = date.getDayOfWeek().getValue();
+        if (currentDay >= 6) {
+            date = date.plusWeeks(1).with(DayOfWeek.MONDAY);
         }
+
+        List<LocalDateTime> localDateTimes = new ArrayList<>();
+        for (int i = 0; i < periodCount; i++) {
+            if (date.getDayOfWeek().getValue() < 6) {
+                for (LocalTime time : times) {
+                    localDateTimes.add(LocalDateTime.of(date, time));
+                }
+            }
+            date = date.plusDays(1);
+        }
+
         return localDateTimes;
     }
 }
