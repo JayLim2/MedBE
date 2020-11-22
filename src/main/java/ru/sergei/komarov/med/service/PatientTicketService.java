@@ -54,13 +54,15 @@ public class PatientTicketService extends BasicDataService<PatientTicket, Intege
 
     public List<LocalDateTime> getFreeTimeListForDate(Doctor doctor, LocalDate date) {
         List<LocalDateTime> freeTimes = createDateTimes(date, possibleTicketTimes);
-        List<PatientTicket> tickets = ((PatientTicketRepository) repository).findByDoctorAndDateTimeBetween(
-                doctor,
-                date.atTime(startWorkingTime),
-                date.atTime(endWorkingTime)
-        );
-        for (PatientTicket ticket : tickets) {
-            freeTimes.remove(ticket.getDateTime());
+        if (freeTimes.size() > 0) {
+            List<PatientTicket> tickets = ((PatientTicketRepository) repository).findByDoctorAndDateTimeBetween(
+                    doctor,
+                    freeTimes.get(0),
+                    freeTimes.get(freeTimes.size() - 1)
+            );
+            for (PatientTicket ticket : tickets) {
+                freeTimes.remove(ticket.getDateTime());
+            }
         }
         return freeTimes;
     }
