@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import ru.sergei.komarov.med.model.Role;
 import ru.sergei.komarov.med.service.user.UserService;
 
 @EnableWebSecurity
@@ -37,13 +39,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                //FIXME Temporary fix. Need to analyze roles and refactor config
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/data/**").hasAnyRole("USER", "SUPPORT", "ADMIN")
-                .antMatchers("/", "/checkHealth", "/resources/**", "/init/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/**").fullyAuthenticated()
                 .and()
                 .httpBasic();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/", "/checkHealth", "/resources/**", "/init/**", "/api/patients/register");
     }
 
     @Autowired
