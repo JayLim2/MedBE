@@ -51,9 +51,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 "/resources/**",
                 "/init/**",
                 "/api/patients/register",
-                "/api/doctors/get/getall",
+                "/api/doctors/get/all",
                 "/api/doctors/get/medService/**",
-                "/api/medicalServices/get/getall"
+                "/api/medicalServices/get/all"
         );
     }
 
