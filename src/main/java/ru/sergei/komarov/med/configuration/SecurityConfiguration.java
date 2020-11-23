@@ -45,7 +45,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/checkHealth", "/resources/**", "/init/**", "/api/patients/register");
+        web.ignoring().antMatchers(
+                "/",
+                "/checkHealth",
+                "/resources/**",
+                "/init/**",
+                "/api/patients/register",
+                "/api/doctors/get/getall",
+                "/api/doctors/get/medService/**",
+                "/api/medicalServices/get/getall"
+        );
     }
 
     @Autowired
